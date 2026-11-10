@@ -1,0 +1,193 @@
+<div class="announcement-bar">
+  <span>THE CULTURE NEVER STANDS STILL</span>
+  <span class="announcement-divider">—</span>
+  <span>FREE DELIVERY ON ORDERS OVER R500</span>
+</div>
+
+<header class="site-header">
+  <button class="mobile-menu-button icon-button" type="button" aria-label="Open menu" (click)="mobileMenuOpen = !mobileMenuOpen">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" /></svg>
+  </button>
+
+  <a class="brand-lockup" href="#top" aria-label="ISNEAK COLLECTIVE home">
+    <img src="assets/isneak-collective-logo.png" alt="ISNEAK COLLECTIVE — Built on Culture">
+  </a>
+
+  <nav class="desktop-nav" aria-label="Main navigation">
+    <a href="#products" (click)="setFilter('All products')">Shop all</a>
+    <a href="#products" (click)="setFilter('New arrivals')">New arrivals</a>
+    <a href="#products" (click)="setFilter('Sneakers')">Sneakers</a>
+    <a href="#products" (click)="setFilter('Sale')">Sale</a>
+  </nav>
+
+  <div class="header-actions">
+    <button class="icon-button search-shortcut" aria-label="Go to search" type="button" (click)="focusSearch()">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
+    </button>
+    <button class="bag-button" type="button" (click)="toggleCart()" aria-label="Open shopping bag">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+      <span class="bag-label">Bag</span>
+      <span class="bag-count">{{ cartCount }}</span>
+    </button>
+  </div>
+
+  <nav class="mobile-nav" [class.is-open]="mobileMenuOpen" aria-label="Mobile navigation">
+    <a href="#products" (click)="setFilter('All products'); mobileMenuOpen = false">Shop all</a>
+    <a href="#products" (click)="setFilter('New arrivals'); mobileMenuOpen = false">New arrivals</a>
+    <a href="#products" (click)="setFilter('Sneakers'); mobileMenuOpen = false">Sneakers</a>
+    <a href="#products" (click)="setFilter('Sale'); mobileMenuOpen = false">Sale</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero-section">
+    <div class="hero-copy">
+      <p class="eyebrow light-eyebrow"><span class="eyebrow-line"></span> INDEPENDENT SNEAKER CULTURE</p>
+      <h1>STEP INTO<br><span>YOUR OWN.</span></h1>
+      <p class="hero-description">More than a sneaker. It's how you show up.<br>Find your next rotation staple.</p>
+      <a class="hero-cta" href="#products">Explore the collection <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="hero-art" aria-label="ISNEAK Collective brand mark">
+      <div class="hero-art-ring ring-one"></div>
+      <div class="hero-art-ring ring-two"></div>
+      <img src="assets/isneak-collective-logo.png" alt="ISNEAK COLLECTIVE, Built on Culture" class="hero-logo">
+      <span class="hero-side-note">EST. FOR THE CULTURE<br>ALWAYS IN ROTATION</span>
+    </div>
+    <div class="hero-bottomline"><span>01 / THE COLLECTION</span><span>BUILT ON CULTURE. MADE TO MOVE.</span><span>SCROLL TO DISCOVER ↓</span></div>
+  </section>
+
+  <section class="shop-intro" aria-labelledby="shop-title">
+    <div class="shop-intro-heading">
+      <div>
+        <p class="eyebrow"><span class="eyebrow-line"></span> THE ISNEAK EDIT</p>
+        <h2 id="shop-title">Find your <span>next pair.</span></h2>
+      </div>
+      <p class="shop-intro-note">Curated pairs. Everyday icons.<br>Only the ones worth the rotation.</p>
+    </div>
+
+    <div class="search-panel">
+      <div class="search-panel-title">
+        <div>
+          <span class="search-kicker">SMART STOREFRONT SEARCH</span>
+          <h3>What are you looking for?</h3>
+        </div>
+        <span class="search-index">IC / 001</span>
+      </div>
+      <div class="search-input-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
+        <input id="store-search" type="search" [(ngModel)]="searchTerm" (keyup.enter)="search()" placeholder="Try a colour, size, style, brand or under R500..." aria-label="Search products">
+        <button type="button" (click)="search()">Search <span aria-hidden="true">↗</span></button>
+      </div>
+      <div class="suggestion-row">
+        <span class="suggestion-label">TRENDING SEARCHES</span>
+        <button type="button" (click)="searchTerm = 'sale'; activeFilter = 'All products'">Sale</button>
+        <button type="button" (click)="searchTerm = 'sneakers'; activeFilter = 'All products'">Sneakers</button>
+        <button type="button" (click)="searchTerm = 'Nike'; activeFilter = 'All products'">Nike</button>
+        <button type="button" (click)="searchTerm = 'Air Max 95'; activeFilter = 'All products'">Air Max 95</button>
+        <button type="button" (click)="searchTerm = 'Green'; activeFilter = 'All products'">Green</button>
+        <button type="button" (click)="searchTerm = 'new'; activeFilter = 'All products'">New</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="products-section" id="products" aria-labelledby="products-heading">
+    <div class="products-toolbar">
+      <div class="products-title-wrap">
+        <p class="eyebrow"><span class="eyebrow-line"></span> GOOD TASTE, GREAT PAIRS</p>
+        <h2 id="products-heading">All products <span class="product-count">({{ visibleProducts.length }})</span></h2>
+      </div>
+      <label class="sort-control">
+        <span>Sort by</span>
+        <select [(ngModel)]="sortBy" aria-label="Sort products">
+          <option value="featured">Featured</option>
+          <option value="price-low">Price: low to high</option>
+          <option value="price-high">Price: high to low</option>
+          <option value="name">Name: A–Z</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="filter-row" role="group" aria-label="Filter products">
+      <button *ngFor="let filter of filters" type="button" [class.active]="activeFilter === filter" (click)="setFilter(filter)">{{ filter }}</button>
+      <button *ngIf="searchTerm" type="button" class="clear-filter" (click)="searchTerm = ''; activeFilter = 'All products'">Clear search ×</button>
+    </div>
+
+    <div class="product-grid" *ngIf="visibleProducts.length; else emptyState">
+      <article class="product-card" *ngFor="let product of visibleProducts; let i = index">
+        <button class="product-image-button" type="button" (click)="openProduct(product)" [attr.aria-label]="'View ' + product.name">
+          <div class="product-image-frame">
+            <img [src]="product.image" [alt]="product.name" [loading]="i > 3 ? 'lazy' : 'eager'">
+            <span class="product-badge" *ngIf="product.badge">{{ product.badge }}</span>
+            <span class="quick-view">Quick view <span aria-hidden="true">↗</span></span>
+          </div>
+        </button>
+        <div class="product-meta">
+          <div class="product-brand-line"><span>{{ product.brand }}</span><span class="product-dot"></span><span>ISNEAK SELECT</span></div>
+          <button class="product-name" type="button" (click)="openProduct(product)">{{ product.name }}</button>
+          <div class="product-price-line">
+            <span class="product-price">{{ formatPrice(product.price) }}</span>
+            <span class="old-price" *ngIf="product.oldPrice">{{ formatPrice(product.oldPrice) }}</span>
+            <button class="add-icon" type="button" (click)="quickAdd(product)" [attr.aria-label]="'Choose size for ' + product.name">+</button>
+          </div>
+        </div>
+      </article>
+    </div>
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <span class="empty-mark">IS / 00</span>
+        <h3>No pairs found.</h3>
+        <p>Try another search or clear your filters to explore the full collection.</p>
+        <button type="button" (click)="searchTerm = ''; activeFilter = 'All products'">Show all products</button>
+      </div>
+    </ng-template>
+  </section>
+
+  <section class="culture-strip">
+    <div class="culture-strip-brand"><img src="assets/isneak-collective-logo.png" alt="ISNEAK COLLECTIVE — Built on Culture"></div>
+    <div class="culture-strip-copy"><p class="eyebrow light-eyebrow"><span class="eyebrow-line"></span> MORE THAN WHAT'S ON YOUR FEET</p><h2>Culture in every<br><span>step.</span></h2></div>
+    <div class="culture-strip-number">IC<br><strong>002</strong></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="footer-brand-column">
+      <img src="assets/isneak-collective-logo.png" alt="ISNEAK COLLECTIVE — Built on Culture" class="footer-logo">
+      <p>For the ones who move culture.<br>For the ones who make it their own.</p>
+      <div class="social-links"><a href="#top" aria-label="Instagram">IG ↗</a><a href="#top" aria-label="TikTok">TK ↗</a></div>
+    </div>
+    <div class="footer-links-column"><span class="footer-heading">EXPLORE</span><a href="#products">Shop all</a><a href="#products" (click)="setFilter('New arrivals')">New arrivals</a><a href="#products" (click)="setFilter('Sale')">Sale</a><a href="#top">Our story</a></div>
+    <div class="newsletter-column"><span class="footer-heading">STAY IN THE LOOP</span><h3>Get the latest drops,<br>offers and news.</h3><form class="newsletter-form" (ngSubmit)="subscribe()"><input type="email" name="newsletterEmail" [(ngModel)]="newsletterEmail" placeholder="Your email address" aria-label="Your email address"><button type="submit" aria-label="Subscribe">→</button></form><p class="newsletter-message" *ngIf="newsletterMessage">{{ newsletterMessage }}</p><p class="newsletter-small">No noise. Just the good stuff.</p></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 ISNEAK COLLECTIVE. ALL RIGHTS RESERVED.</span><span>BUILT ON CULTURE.</span><a href="#top">BACK TO TOP ↑</a></div>
+</footer>
+
+<div class="modal-backdrop" *ngIf="selectedProduct" (click)="closeProduct()" role="presentation">
+  <section class="product-modal" *ngIf="selectedProduct as product" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" [attr.aria-label]="product.name">
+    <button class="modal-close icon-button" type="button" (click)="closeProduct()" aria-label="Close product details">×</button>
+    <div class="modal-image"><img [src]="product.image" [alt]="product.name"></div>
+    <div class="modal-details">
+      <p class="eyebrow"><span class="eyebrow-line"></span> {{ product.brand }} / ISNEAK SELECT</p>
+      <h2>{{ product.name }}</h2>
+      <div class="modal-price">{{ formatPrice(product.price) }} <span *ngIf="product.oldPrice">{{ formatPrice(product.oldPrice) }}</span></div>
+      <p class="modal-description">{{ product.description }}</p>
+      <div class="variant-head"><span>SELECT YOUR SIZE</span><span>UK SIZES</span></div>
+      <div class="size-grid">
+        <button *ngFor="let size of product.sizes" type="button" [class.selected]="selectedSize === size" (click)="selectedSize = size">{{ size }}</button>
+      </div>
+      <button class="add-to-bag-button" type="button" (click)="addToCart(product, selectedSize)">Add to bag <span>↗</span></button>
+      <div class="delivery-note"><span>✓</span><p>Standard delivery 3–5 business days<br><strong>Free delivery on orders over R500</strong></p></div>
+      <div class="delivery-note"><span>↺</span><p>Easy returns within 7 days of delivery</p></div>
+    </div>
+  </section>
+</div>
+
+<div class="cart-backdrop" *ngIf="cartOpen" (click)="toggleCart()" role="presentation">
+  <aside class="cart-drawer" (click)="$event.stopPropagation()" aria-label="Shopping bag">
+    <div class="cart-heading"><div><span class="eyebrow">YOUR ROTATION</span><h2>Your bag <span>({{ cartCount }})</span></h2></div><button type="button" class="icon-button" (click)="toggleCart()" aria-label="Close bag">×</button></div>
+    <div class="cart-empty" *ngIf="cartCount === 0"><div class="bag-outline">IC</div><h3>Your bag is waiting.</h3><p>Find a pair that feels like you.</p><button type="button" (click)="toggleCart()">Explore the collection ↗</button></div>
+    <div class="cart-filled" *ngIf="cartCount > 0"><p class="cart-success">✓ {{ cartCount }} {{ cartCount === 1 ? 'pair' : 'pairs' }} added to your bag.</p><p class="cart-placeholder-note">Your bag is saved for this demo session. Connect a checkout provider to accept payments.</p><button type="button" (click)="showToast('Checkout is not connected in this frontend demo.'); toggleCart()">Continue to checkout ↗</button></div>
+  </aside>
+</div>
+
+<div class="toast-message" *ngIf="toastMessage" role="status">{{ toastMessage }}</div>
